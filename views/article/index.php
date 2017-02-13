@@ -115,6 +115,7 @@ $this->title = 'Love Story';
                 ]
             ]);?>
         </div>
+        <a href="<?=Url::toRoute(['/article/rbac'])?>">权限试一下</a>
         <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
        <div class="row note">
 	 <div class="panel panel-default">

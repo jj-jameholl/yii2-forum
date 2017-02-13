@@ -26,6 +26,10 @@ $config = [
 
             ],
         ],
+        'authManager' => [
+            'class'=> 'yii\rbac\PhpManager',
+            'defaultRoles' =>['author'],
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

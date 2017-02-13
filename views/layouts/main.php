@@ -159,7 +159,7 @@ var tipsi;
             if(message.kind == "note") {
                 layer.open({
                     type: 1,
-                    time: 10000,
+                    //time: 10000,
                     skin: 'layui-layer-lan',
                     offset: ["60px", "80%"],
                     area: ["18%", "50px"],

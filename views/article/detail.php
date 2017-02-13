@@ -107,7 +107,7 @@ $this->title = $article->article;
                 </a>&nbsp;
                 <?php }?>
                 </div>
-<?php if(Yii::$app->user->identity->id == $user->id){?>
+<?php if(Yii::$app->user->can('edit',['post'=>$article])){?>
 <div class="btns">
 	                    <button id="reedit" class="btn btn-info" onclick="javascrtpt:window.location.href='<?=Url::toRoute(['/article/edit','article_id'=>$article->id])?>'"><span class="glyphicon glyphicon-repeat"></span>&nbsp;修改</button>
                     <button id="delete" class="btn btn-danger"  onclick="javascrtpt:window.location.href='<?=Url::toRoute(['/article/delete','article_id'=>$article->id])?>'"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>

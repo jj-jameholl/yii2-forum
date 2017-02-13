@@ -12,7 +12,9 @@
  * Time: 上午11:13
  */
 namespace app\controllers;
+use app\models\UserFinder;
 use Yii;
+use ReflectionClass;
 use yii\filters\AccessControl;
 use yii\web\IdentityInterface;
 use app\models\User;
@@ -21,9 +23,9 @@ use app\models\Note;
 use yii\web\Controller;
 use app\models\Tags;
 use app\models\Noteupdown;
+use yii\base\Event;
 class ArticleController extends Controller{
     public $enableCsrfValidation = false;
-
     public function behaviors(){
         return [
            // 'access'=>[
@@ -61,6 +63,57 @@ class ArticleController extends Controller{
             ],
         ];
     }
+    public function actionRbac(){
+        $auth = Yii::$app->authManager;
+
+//        $rule = new \app\rbac\AuthorRule();
+//        $auth->add($rule);
+//        $edit_self = $auth->getPermission('edit_self');
+//        $edit_self->ruleName = $rule->name;
+//        $delete_self = $auth->getPermission('delete_self');
+//        $delete_self->ruleName = $rule->name;
+//        $auth->add($edit_self);
+//        $auth->add($delete_self);
+//
+//        $auth->removeAll();
+//        $edit = $auth->createPermission('edit');
+//        $edit->description = "编辑文章";
+//        $auth->add($edit);
+//
+//        $delete = $auth->createPermission('delete');
+//        $delete->description = "删除文章";
+//        $auth->add($delete);
+//
+//        $admin = $auth->createRole('admin');
+//        $admin->description = '管理员';
+//        $auth->add($admin);
+//        $auth->addChild($admin,$edit);
+//        $auth->addChild($admin,$delete);
+//
+//        $edit_self = $auth->createPermission('edit_self');
+//        $edit_self->description = '编辑自己的文章';
+//        $auth->add($edit_self);
+//
+//        $delete_self = $auth->createPermission('delete_self');
+//        $delete_self->description = '删除自己的文章';
+//        $auth->add($delete_self);
+//
+//        $auth->addChild($edit_self,$edit);
+//        $auth->addChild($delete_self,$delete);
+//
+        $author = $auth->getRole('author');
+        $author->description = '作者';
+        $auth->add($author);
+        $edit_self = $auth->getPermission('edit_self');
+        $delete_self = $auth->getPermission('delete_self');
+        $auth->addChild($author,$delete_self);
+        $auth->addChild($author,$edit_self);
+//
+//        $auth->assign($admin,1);
+//        $auth->assign($author,2);
+    }
+
+
     public function actionCreate(){
 	if(isset($_POST['id'])){
 	$model = Article::find()->where(['id'=>$_POST['id']])->one();
@@ -93,16 +146,18 @@ class ArticleController extends Controller{
         return $this->render('create',['model'=>$model]);
     }
     public function actionIndex(){
-        $model = new Article();
+        $model = new \app\models\Article();
         $dataProvider = $model->search(null);
         return $this->render('index',['model'=>$model,'dataProvider'=>$dataProvider]);
     }
     public function actionDetail($id){
+          $model = new Article;
+        //$this->on(Article::EVENT_LET_IN,[$model,'letin'],"cnm");
+        //$this->trigger(Article::EVENT_LET_IN);
            $article = Article::find()->where(['id'=>$id])->one();
             $user = User::find()->where(['id'=>$article->user_id])->one();
         return $this->render('detail',['article'=>$article,'user'=>$user]);
     }
- 	   
  public function actionSearch(){
 		        $model = new Article();
         if(isset($_GET["find"])){
@@ -113,10 +168,16 @@ class ArticleController extends Controller{
         return $this->render('index',['dataProvider'=>$dataProvider]);  
   }
 	    public function actionEdit(){
+            $model = new Article();
+           // $model->start();
         $model = Article::find()->where(['id'=>$_GET['article_id']])->one();
         return $this->render('create',['model'=>$model,'id'=>$_GET['article_id']]);
     }
     public function actionDelete(){
+        $post = Article::find()->where(['id'=>$_GET['article_id']])->one();
+
+//        $this->on(Article::EVENT_LET_IN,[$model,'letin']);
+//        $this->trigger(Article::EVENT_LET_IN);
         if(Article::deleteAll(['id'=>$_GET['article_id']])){
             return $this->redirect(['article/index']);
         }
