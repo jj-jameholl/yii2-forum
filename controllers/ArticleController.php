@@ -63,6 +63,15 @@ class ArticleController extends Controller{
             ],
         ];
     }
+    public function actionEmail(){
+        $email = Yii::$app->mailer->compose('greet',[
+            'title'=> '333',
+            'content'=> 'hhhhh',
+        ])
+            ->setTo('1135560676@qq.com')
+            ->setSubject("Love Story")
+            ->send();
+    }
     public function actionRbac(){
         $auth = Yii::$app->authManager;
 

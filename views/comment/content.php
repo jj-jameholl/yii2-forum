@@ -23,7 +23,7 @@ $this->registerJs(
 <input type="hidden" value="<?=$id?>" id="article_id">
 <?php Pjax::begin(['id'=>'new_comment','enablePushState' => false,'linkSelector'=>false,'options'=>['data-pjax'=>true]])?>
 <?php $form = ActiveForm::begin([
-    'action' => ['comment/create','id' => $id],
+    'action' => ['comment/create','id' => $id,'author'=>$user_id],
     'method'=>'post',
     'options'=>['data-pjax'=>true],
 ]); ?>

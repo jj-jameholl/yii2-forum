@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use app\models\Comment;
 use app\models\Updown;
+use app\models\User;
 error_reporting (E_ALL & ~E_NOTICE);
 class CommentController extends Controller{
 public $enableCsrfValidation = false;   
@@ -36,7 +37,9 @@ public $enableCsrfValidation = false;
         $model->username = Yii::$app->user->identity->username;
         $model->user_id = Yii::$app->user->identity->id;
         $model->article_id = $_GET['id'];
+        $email = User::findemailbyid($_GET['author']);
         $model->createdTime = time()+8*3600;
+        $model->send_email($model->username,$email);
         if($model->save()){
             return $this->renderAjax('/comment/content',['model'=>$model,'id'=>$model->article_id]);
         }

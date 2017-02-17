@@ -106,4 +106,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	    public static function findimgbyid($id){
         return self::find()->where(['id'=>$id])->one()->photo;
     }
+    public static function findemailbyid($id){
+        return self::find()->where(['id'=>$id])->one()->email;
+    }
 }

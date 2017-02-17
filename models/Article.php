@@ -106,9 +106,8 @@ class Article extends \yii\db\ActiveRecord
         $this->trigger(self::EVENT_LET_GO);
     }
     public function letin($event){
-        echo get_class($event->sender);
-        echo $event->name;
-        exit;
+        //echo get_class($event->sender);
+        echo $event->data;
     }
 /*    public function getTagLinks()
     {

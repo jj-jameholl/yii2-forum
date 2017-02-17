@@ -93,5 +93,20 @@ class Comment extends \yii\db\ActiveRecord
         $model = self::find()->where(['id'=>$id])->one();
         return $model->user_id;
     }
+    public function send_email($username,$email)
+    {
+        $info = [$username,$email];
+       $this->on(self::EVENT_BEFORE_INSERT,[$this,'send'],$info);
+    }
+    public function send($event){
+        $res = Yii::$app->mailer->compose('greet', [
+            'html' => 'html',
+            'title' => '文章回复',
+           'content' => $event->data[0],
+        ])
+            ->setTo($event->data[1])
+            ->setSubject("Love Story")
+            ->send();
+    }
 }
 
