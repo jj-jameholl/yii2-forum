@@ -64,6 +64,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
 	    if (!empty($_POST)&&$_POST['username']!=null) {
                 $model = new LoginForm();
                 $model->username = $_POST['username'];

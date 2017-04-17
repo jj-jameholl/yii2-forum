@@ -5,17 +5,22 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log']  ,
 	'components' => [
 	'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '123456',
-            'enableCsrfValidation' => 'false',
+            'enableCsrfValidation' => 'true',
         ],
+     'response'=>[
+         'format' => yii\web\Response::FORMAT_HTML,
+         'charset' => 'UTF-8',
+     ],
 	    'urlManager'=>[
 	        'enablePrettyUrl' => true,
             'enableStrictParsing' =>false,
             'showScriptName' => false,
+            'suffix'=> '.html',
             'rules' => [
                 'info'=>'info/index',
                 'articles'=>'article/index',
@@ -26,13 +31,27 @@ $config = [
 
             ],
         ],
+        'redis'=>[
+            'class'=>'yii\redis\Connection',
+            'hostname'=> 'localhost',
+            'port' => 6379,
+            'database' => 0,
+        ],
         'authManager' => [
             'class'=> 'yii\rbac\PhpManager',
             'defaultRoles' =>['author'],
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\redis\Cache',
+            'redis'=>[
+                'hostname'=> 'localhost',
+                'port'=> 6379,
+                'database' => 0,
+            ],
         ],
+//        'cache'=>[
+//            'class'=> 'yii\caching\FileCache'
+//        ],
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
@@ -61,11 +80,13 @@ $config = [
             ],
         ],
         'log' => [
+            'flushInterval'=>'1',
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning','profile'],
+                    'exportInterval' => 1,
                 ],
             ],
         ],

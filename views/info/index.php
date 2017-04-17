@@ -7,6 +7,7 @@
  */
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <style>
     .leff{
@@ -88,6 +89,22 @@ padding-left:10px;
 	border:1px #eee solid;
         border-radius: 5px;
     }
+    .register-div{
+        width: 100%;
+        height: 100%;
+        border: 1px #16a085 dashed;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding: 15px;
+    }
+    .basic-div{
+        width: 100%;
+        height: 100%;
+        border: 1px #16a085 dashed;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding:10px;
+    }
     </style>
 <div class="container">
 <div class="col-sm-2">
@@ -160,6 +177,7 @@ padding-left:10px;
             <h2>这里写我们的动态,比如说评论,写文章等等</h2>
             </div>
             <div class="tab-pane fade" id="basic">
+                <div class="basic-div">
                     <?php $form=ActiveForm::begin([
                 'id'=>'info',
                 'options'=>['class'=>'form-horizontal'],
@@ -186,6 +204,7 @@ padding-left:10px;
                    </fieldset>
                 <?php }?> 
 	    <?php ActiveForm::end()?>
+                    </div>
 		 </div>
             <div class="tab-pane fade" id="like">
             <h2>我收藏的文章</h2>
@@ -194,18 +213,54 @@ padding-left:10px;
                 <h2>该用户的所有文章</h2>
             </div>
             <div class="tab-pane fade" id="register">
-            <h2>别人只有我们来帮忙注册哈,发展亲属!</h2>
+            <div class="register-div">
+                <?php $form=ActiveForm::begin([
+                    'options'=>['class'=>'form-horizontal'],
+                    'fieldConfig'=>[
+                        'template'=>"<div class='col-sm-1'>{label}</div><div class='col-sm-6'>{input}</div><div class='col-sm-2'>{error}</div>",
+                    ],
+                    'action'=>['info/create'],
+                    'method'=>'post',
+                ])?>
+                                <?=$form->field($user,'username')->textInput(['value'=>''])?>
+                                <?=$form->field($user,'newpass')->passwordInput(['id'=>'password'])?>
+                                <?=$form->field($user,'email')->textInput(['value'=>''])?>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#resure" id="passpass">确认注册</button>
+                                    <div class="modal fade" id="resure" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content" style="height:auto">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title"">确认密码</h4>
+                                    </div>
+                                        <div class="modal-body">
+                                        <p>您输入的密码是:<h1 id="word" style="color:red"></h1></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">上一步</button>
+                                            <?=Html::submitButton('确认',['class'=>'btn btn-success'])?>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                <?php ActiveForm::end()?>
             </div>
+                </div>
     </div>
     </div>
     </div>
 </div>
+<a href="<?=Url::ToRoute('/info/download')?>">下载</a>
 <script type="text/javascript">
     var tipsi;
     $("#head-photo").hover(function(){
         tipsi = layer.tips('点击修改头像',this,{tips:[1,'black'],time:0});
     },function(){
         layer.close(tipsi);
+    });
+    $("#passpass").click(function(){
+        var ttt = $("#password").val();
+        $("h1").html(ttt);
     });
 </script>
 

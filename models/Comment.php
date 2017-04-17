@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\di\Container;
+use app\models\Note;
 
 /**
  * This is the model class for table "Comment".
@@ -24,11 +26,40 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $_note;
+    private $test;
+//    public function __construct(Note $note)
+//    {
+//        //parent::__construct($config);
+//        $this->_note = $note;
+//    }
+    public function yy(){
+        $this->test ='hh';
+        echo $this->test;
+    }
+    public function hhh(){
+        $this->_note->go();
+    }
     public static function tableName()
     {
         return 'Comment';
     }
-
+     public function __toString()
+     {
+         return "this is a object";
+         // TODO: Implement __toString() method.
+     }
+    public function __invoke()
+    {
+        // TODO: Implement __invoke() method.
+    echo "this is auto function";
+    }
+    public function __call($name,$arguments){
+        echo $name.'不让你用!';
+    }
+    private function fff(){
+        return "yes";
+    }
     /**
      * @inheritdoc
      */

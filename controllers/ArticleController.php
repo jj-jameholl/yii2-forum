@@ -18,12 +18,20 @@ use ReflectionClass;
 use yii\filters\AccessControl;
 use yii\web\IdentityInterface;
 use app\models\User;
-use app\models\Article;
+//use app\models\Article;
 use app\models\Note;
 use yii\web\Controller;
 use app\models\Tags;
+use app\models\Customer;
 use app\models\Noteupdown;
 use yii\base\Event;
+use yii\di\Container;
+use yii\web\HttpException;
+use app\models\Comment;
+use yii\web\NotAcceptableHttpException;
+use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
+
 class ArticleController extends Controller{
     public $enableCsrfValidation = false;
     public function behaviors(){
@@ -132,7 +140,7 @@ class ArticleController extends Controller{
 	$done = 0;
 	}
         if($model->load(Yii::$app->request->post())){
-            $model->last_edit = $model->created = time()+8*3600;
+            //$model->last_edit = $model->created = time()+8*3600;
             $model->writer = Yii::$app->user->identity->username;
             $model->user_id = Yii::$app->user->identity->id;
                        foreach(explode(" ",$model->tag) as $key=>$value){
@@ -155,17 +163,132 @@ class ArticleController extends Controller{
         return $this->render('create',['model'=>$model]);
     }
     public function actionIndex(){
-        $model = new \app\models\Article();
+//        if(class_exists('Article',false)){
+//            echo "33";
+//            exit;
+//        }else{
+//            echo "44";
+//            exit;
+//        }
+//        return $this->render('test');
+//        exit;
+        //echo Yii::getAlias('@vendor');
+        //Yii::setAlias('@photo','@app/photo');
+
+        //echo __DIR__;
+ //       exit;
+//       Yii::$app->cache->flush();
+        //$t = Yii::$app->cache->get('q');
+        //$t = Yii::$app->cache->get("q");
+        //echo $t;
+       // exit;
+       // throw new ServerErrorHttpException();
+        $model = new Comment;
+        $article= new Comment;
+
+
+        //$transaction = Yii::$app->db->beginTransaction();
+//         try{
+//             $model->username = 'ssss';
+//             $model->user_id = '1';
+//             $model->createdTime = '154654654';
+//             $model->save();
+//             $article->username = 'hhhhh';
+//             $article->save();
+//             $transaction->commit();
+//             echo "22";
+//             exit;
+
+//         }catch (Exception $e){
+//             $transaction->rollBack();
+//             echo "rollback";
+//             exit;
+//         }
+
+//       Yii::$container->set('Article','app\models\Article');
+//       $test = Yii::$container->get('Article');
+//        //$reflect=new ReflectionClass($test);
+//        //$test = new Article();
+//        $test->test1();
+//        $test->test2();
+        //echo json_encode($reflect->getMethod('test1'));
+        //exit;
+
+
+
+//        $res = Yii::$app->db->createCommand("call test2(4,1,@s)")->queryOne();
+//        //$res = $cmd->queryOne();
+//        $s = Yii::$app->db->createCommand("select @s")->queryOne();
+//       // $ret = $s->queryOne();
+//        echo $res['sum'];
+//        echo $s['@s'];
+//        exit;
+
+
+
+        //redis数据库的使用
+  //  $customer = new Customer();
+//        $customer->attributes = ['name' => 'test'];
+//        $customer->save();
+//     $customer = Customer::find()->where(['id' => '1'])->one();
+//        echo $customer->article[6]->article;
+//  echo $customer->name;
+  //      exit;
+//        $customer->name = "james";
+//        $customer->address = "www";
+//        $customer->save();
+//        exit;
+
+        //简单with的用法
+//        $user = User::find()->with(['article'=> function($query){
+//                $query->andWhere(['tag'=>'测试']);
+//        }]
+//    )->all();
+//        $articles = $user[3]->article;
+//        foreach ($articles as $article){
+//            echo $article->article;
+//            echo $article->writer;
+//        }
+//        exit;
+
+        //joinwith的用法
+//$user = User::find()->select('user.*')->leftJoin('article',"article.user_id = user.id")->
+//    where(['article.tag'=>'都是'])->with('article')->all();
+//
+//                $articles = $user[0]->article;
+//        foreach ($articles as $article){
+//            echo $article->article;
+//            echo $article->writer;
+//        }
+//        exit;
+//        $user = User::find()->joinWith('article')->where(['article.tag'=>'测试'])->all();
+//        $articles = $user[0]->article;
+//        foreach ($articles as $article){
+//            echo $article->article;
+//        }
+//        exit;
+
+
+//        $file = dirname(__DIR__).'/models/Article.php';
+//        include($file);
+
+        $model = new \Article;
+
+//        echo Yii::getAlias('@' . str_replace('\\', '/', 'app\models\Article') . '.php', false);
+//        exit;
         $dataProvider = $model->search(null);
         return $this->render('index',['model'=>$model,'dataProvider'=>$dataProvider]);
     }
     public function actionDetail($id){
+
+        Yii::beginProfile('block1');
           $model = new Article;
         //$this->on(Article::EVENT_LET_IN,[$model,'letin'],"cnm");
         //$this->trigger(Article::EVENT_LET_IN);
-           $article = Article::find()->where(['id'=>$id])->one();
-            $user = User::find()->where(['id'=>$article->user_id])->one();
-        return $this->render('detail',['article'=>$article,'user'=>$user]);
+           $article = Article::find()->where(['id'=>$id])->with('user')->one();
+            //$user = User::find()->where(['id'=>$article->user_id])->one();
+        Yii::endProfile('block1');
+        return $this->render('detail',['article'=>$article]);
     }
  public function actionSearch(){
 		        $model = new Article();

@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "User".
@@ -14,23 +17,24 @@ use Yii;
  * @property string $photo
  * @property string $authKey
  */
+
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
         return 'User';
     }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-                         [['username', 'password', 'authKey'], 'required','message'=>'{attribute}不能为空!'],
+            [['username', 'password', 'authKey'], 'required','message'=>'{attribute}不能为空!'],
             [['username', 'photo', 'authKey','email','saltpass','newpass','repass','password'], 'string', 'max' => 255],
             [['email'],'email','message'=>'{attribute}格式不正确!'],
             [['tel'], 'string', 'max' => 11],
@@ -40,7 +44,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['repass'],'compare','compareAttribute'=>'newpass','message'=>'两次输入不同'],
 	  ];
     }
-
     /**
      * @inheritdoc
      */
@@ -57,21 +60,38 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	    'newpass'=>'新密码',
 	    'repass' => '再次确认',
 	    'city' => '所在地',
-	    'sign' => '个性签名',	
+	    'sign' => '个性签名',
+            'createdtime' => '创建时间',
         ];
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class'=> TimestampBehavior::className(),
+                'createdAtAttribute' => 'createdtime',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['createdtime','created_at'],
+                    ],
+                ]
+        ];
+    }
+    public function getArticle(){
+        return $this->hasMany(Article::className(),['user_id'=>'id']);
     }
     public static function findIdentity($id)
     {
-        return self::find()->where(['id'=>$id])->one();
+        return self::findOne(['id'=>$id]);
     }
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-        return null;
+//        foreach (self::$users as $user) {
+//            if ($user['accessToken'] === $token) {
+//                return new static($user);
+//            }
+//        }
+//        return null;
+        return static::findOne(['access_token' => $token]);
     }
     public static function findByUsername($username)
     {
@@ -95,18 +115,18 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->password === $password;
     }
     public static function findnamebyid($id){
-        return self::find()->where(['id'=>$id])->one()->username;
+        return self::findOne(['id'=>$id])->username;
     }
     public static function findrolebyid($id){
-	return self::find()->where(['id'=>$id])->one()->role;
+	return self::findOne(['id'=>$id])->role;
 }
        public static function findsignbyid($id){
-        return self::find()->where(['id'=>$id])->one()->sign;
+        return self::findOne(['id'=>$id])->sign;
 }
 	    public static function findimgbyid($id){
-        return self::find()->where(['id'=>$id])->one()->photo;
+        return self::findOne(['id'=>$id])->photo;
     }
     public static function findemailbyid($id){
-        return self::find()->where(['id'=>$id])->one()->email;
+        return self::findOne(['id'=>$id])->email;
     }
 }

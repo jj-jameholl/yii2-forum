@@ -18,7 +18,7 @@ $this->title = $article->article;
 <head>
 <link rel="stylesheet" href="/font/Font-Awesome-3.2.1/css/font-awesome.min.css">
 <!--    <script type="text/javascript" src="/basic/webuploader-0.1.5/webuploader.js"></script>-->
-<script src="/font/dist/js/rotate.js"></script>  
+<script src="/font/dist/js/rotate.js"></script>
   <style>
         .img{
             height:43px;
@@ -85,9 +85,15 @@ $this->title = $article->article;
         </ol>
         <div class="article">
         <div class="title">
+            <?php
+            $dependency = [
+                'class'=>'yii\caching\DbDependency',
+                'sql'=>'select max(last_edit) from Article where id = '.$article->id,
+            ];
+            if($this->beginCache($article->article,['dependency'=>$dependency])) {?>
         <h2><?=Html::encode($article->article)?></h2>
             <div class="info">
-               <a href="<?=Url::toRoute(['/info/look','id'=>$user->id])?>"><img class="img" src="/uploads/avatar/<?=$user->id?>/<?=$user->photo?>" title=<?=$user->role?>&nbsp;: data-toggle="popover" data-trigger="hover" data-placement="right" data-content=<?=$user->sign?>></a>&nbsp;<?=$user->username?>&nbsp;&nbsp;
+               <a href="<?=Url::toRoute(['/info/look','id'=>$article->user->id])?>"><img class="img" src="/uploads/avatar/<?=$article->user->id?>/<?=$article->user->photo?>" title=<?=$article->user->role?>&nbsp;: data-toggle="popover" data-trigger="hover" data-placement="right" data-content=<?=$article->user->sign?>></a>&nbsp;<?=$article->user->username?>&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-time"></span><?=date('Y-m-d H:i',$article->created)?>&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-pencil" ></span><?='评论:'.Comment::count($article->id)?>&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-heart-empty" ></span>&nbsp;<?=$article->loves?>&nbsp;
@@ -96,6 +102,7 @@ $this->title = $article->article;
             <div class="content">
             <?=HtmlPurifier::process($article->content);?>
             </div>
+            <?php $this->endCache(); }?>
   	<div class="nothing">
 	<div class="tags">
                 <?php foreach(explode(" ",$article->tag) as $tag=>$value){?>
@@ -165,10 +172,14 @@ $this->title = $article->article;
 <!--                 </div>-->
 <!--            </li>-->
 <!--        </ul>-->
-        <?php
-        echo $this->render('/comment/commentlist',[
-            'id'=>$article->id
-        ]);
+
+            <?php
+
+
+                echo $this->render('/comment/commentlist', [
+                    'id' => $article->id
+                ]);
+
         ?>
         <br>
         <br>

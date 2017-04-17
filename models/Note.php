@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-
+use yii\di\Container;
 /**
  * This is the model class for table "Note".
  *
@@ -60,6 +60,10 @@ class Note extends \yii\db\ActiveRecord
             ]
         ]);
         return $dataProvider;
+    }
+    public function go(){
+        echo "you will see ok!";
+        exit;
     }
 }
 

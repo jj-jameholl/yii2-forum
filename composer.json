@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "yiidoc/yii2-redactor": "*",
         "yidashi/yii2-bootstrap-markdown": "*",
-        "hyii2/yii2-avatar": "dev-master"
+        "hyii2/yii2-avatar": "dev-master",
+        "yiisoft/yii2-redis": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

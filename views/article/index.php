@@ -121,23 +121,39 @@ $this->title = 'Love Story';
         <div class="panel-heading">
             <p>来了就留下两句呗&nbsp;&nbsp;<i class="glyphicon glyphicon-send"></i></p>
         </div>
-            <?php $form = ActiveForm::begin([
+            <?php
+            $dependency = [
+                'class'=>'yii\caching\DbDependency',
+                'sql'=>'select max(createdtime) from Note',
+            ];
+            if($this->beginCache('note',['dependency'=>$dependency])) {
+            $form = ActiveForm::begin([
                 'options'=>['data-pjax'=>'true'],
             ]);?>
             <div class="input-group input-note input-group-note">
             <input type="text" class="form-control" id="note-id" placeholder="写什么呢..."  name="note" style="width:73%;margin-left:2%;font-size:12px">
                 <span><input type="button" class="btn btn-primary btn-note" id="note-go" value="留言"></span>
             </div>
-            <?php ActiveForm::end()?>
+            <?php ActiveForm::end();
+            $this->endCache();}
+            ?>
+
             <br>
 		<div class="panel-body note-body">
 		 <?php Pjax::begin(['id'=>'notess','timeout'=>false,])?>
-      		 <?=ListView::widget([
+<!--            --><?php
+//            $dependency = [
+//                'class'=> 'yii\caching\DbDependency',
+//                'sql' => 'select max(createdtime) from Note',
+//            ];
+//            if($this->beginCache(rand(),['dependency'=>$dependency])){?>
+            <?=ListView::widget([
                     'id'=>'note',
                     'dataProvider'=>Note::findnote(),
                     'itemView'=>'/note/_note',
                     'layout'=>'{items}',
                 ])?>
+<!--            --><?php //$this->endCache();}?>
 		<script>
     $(function (){
         $("[data-toggle='popover']").popover();

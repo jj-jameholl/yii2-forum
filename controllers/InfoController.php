@@ -9,6 +9,7 @@ namespace app\controllers;
 use yii;
 use app\models\User;
 use yii\web\Controller;
+use yii\web\Response;
 
 class InfoController extends Controller{
 public function behaviors()
@@ -61,4 +62,36 @@ public function actionLook($id){
             }
         }
     }
+ public function actionCreate(){
+     $model =new User();
+     if($model->load(Yii::$app->request->post())) {
+         $model->authKey = md5(time());
+         $model->saltpass = md5(time());
+         $model->password = md5($model->newpass.$model->saltpass);
+         $model->newpass = $model->repass = '';
+         if ($model->save()){
+             $res = Yii::$app->mailer->compose('greet', [
+                     'html' => 'html',
+                     'title' => '文章回复',
+                     'content' => '账户已创建,请登录网站使用!'
+                 ]
+             )->setTo($model->email)
+                 ->setSubject("Love Story")
+                 ->send();
+             return $this->redirect(['/info/index']);
+         }else{
+             echo $model->username;
+         }
+
+     }
+ }
+ public function actionDownload(){
+    // return Yii::warning("something wrong");
+     //return \Yii::$app->response->sendFile('../User.sql');
+//     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//     return [
+//         'message' => 'hello world',
+//         'code' => 100,
+//     ];
+ }
 }

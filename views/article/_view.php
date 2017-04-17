@@ -25,7 +25,7 @@ color:#999;
     <div class="info">
     <span class="glyphicon glyphicon-user" ></span>&nbsp;<em><?=Html::encode(User::findnamebyid($model->user_id));?></em>&nbsp;&nbsp;|&nbsp;
     <span class="glyphicon glyphicon-time" ></span>&nbsp;<em><?=date('Y-m-d H:i',$model->created);?></em>&nbsp;&nbsp;|&nbsp;
-    <span class="glyphicon glyphicon-pencil" ></span><em><?='评论:'.Comment::count($model->id)?></em>&nbsp;&nbsp;|&nbsp;
+    <span class="glyphicon glyphicon-pencil" ></span><em><?='评论:'.count($model->comment)?></em>&nbsp;&nbsp;|&nbsp;
     <span class="glyphicon glyphicon-heart" ></span>&nbsp;<em><?=$model->loves?></em>&nbsp;&nbsp;
     </div>
     </div>
