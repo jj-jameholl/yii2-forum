@@ -3,4 +3,7 @@ hhhh
 hello world
 come on
 hongongogngo
-33333
+<<<<<<< HEAD333
+=======
+2222
+>>>>>>> dev
