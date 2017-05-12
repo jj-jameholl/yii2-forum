@@ -79,6 +79,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getArticle(){
         return $this->hasMany(Article::className(),['user_id'=>'id']);
     }
+    public function getLog(){
+        return $this->hasMany(Log::className(),['to_uid'=>'id']);
+    }
     public static function findIdentity($id)
     {
         return self::findOne(['id'=>$id]);

@@ -20,6 +20,7 @@ $this->registerJs('
 	$(".comment-form").find("input").filter(".input3").val("");
     $(".comment-form").find("input").filter(".input2").val($(this).parent().attr("class").split(" ")[0]);
     $(".comment-form").find("input").filter(".input3").val($(this).parent().attr("class").split(" ")[1]);
+    $(".comment-form").find("input").filter(".input1").val($(this).parent().attr("class").split(" ")[1]);
     });
 	
    //点赞

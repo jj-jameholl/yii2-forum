@@ -11,6 +11,7 @@ use yii;
 use app\models\User;
 use yii\web\Controller;
 use yii\web\Response;
+use app\models\Log;
 
 class InfoController extends Controller{
     public $enableCsrfValidation = false;
@@ -40,9 +41,10 @@ public function behaviors()
     }
 public function actionIndex(){
     $upload = new Upload;
-    $hi = ['one','two','three'];
-    $user = User::find()->where(['id'=>Yii::$app->user->identity->id])->one();
-    return $this->render('index',['user'=>$user,'file'=>$upload,'hi'=>$hi]);
+    $user = User::find()->with('log')->where(['id'=>Yii::$app->user->identity->id])->one();
+//    print_r($user->log);
+//    exit;
+    return $this->render('index',['user'=>$user,'file'=>$upload]);
 }
 public function actionLook($id){
     $user = User::find()->where(['id'=>$id])->one();

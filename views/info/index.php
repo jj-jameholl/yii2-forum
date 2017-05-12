@@ -177,9 +177,9 @@ padding-left:10px;
         </ul>
         <div id="mytabs" class="tab-content">
             <div id="done" class="tab-pane fade in active">
-                <?php for($i=0;$i<5;$i++) {?>
-                <div class="basic-div about">
-                    <p>没有找到相关数据</p>
+                <?php foreach($user->log as $log) {?>
+                    <div class="basic-div about">
+                        <p><?=$log->content?></p>
                     </div>
                 <?php }?>
                <!-- <?php $form=ActiveForm::begin([
