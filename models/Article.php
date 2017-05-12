@@ -36,10 +36,19 @@ class Article extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public $_comment;
+    private $a="hello";
+    private $b="world";
+//
 //    public function __construct(Comment $comment)
 //    {
 //        $this->_comment = $comment;
 //    }
+    public function getone(){
+        return $this->a;
+    }
+    public function gettwo(){
+        return $this->b;
+    }
     public function test1(){
         $this->_comment->yy();
     }
@@ -69,6 +78,7 @@ class Article extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public function rules()
     {
         return [
