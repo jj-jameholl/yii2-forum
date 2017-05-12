@@ -1,5 +1,3 @@
-<<<<<<< HEAD
+zhan
 hhhh
-=======
 hello world
->>>>>>> dev
