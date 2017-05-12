@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\di\Container;
-use app\models\Note;
+//use app\models\Note;
 
 /**
  * This is the model class for table "Comment".
@@ -27,7 +27,7 @@ class Comment extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public $_note;
-    private $test;
+    public $test;
 //    public function __construct(Note $note)
 //    {
 //        //parent::__construct($config);

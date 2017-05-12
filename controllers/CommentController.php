@@ -13,6 +13,7 @@ use yii\web\Controller;
 use app\models\Comment;
 use app\models\Updown;
 use app\models\User;
+use app\models\Log;
 use yii\base\Exception;
 use yii\web\NotFoundHttpException;
 
@@ -37,18 +38,35 @@ public $enableCsrfValidation = false;
     }
     public function actionCreate(){
         $model = new Comment();
-        $article= new Comment();
+        $log = new Log();
+        //$article= new Comment();
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model->load(Yii::$app->request->post());
             $model->username = Yii::$app->user->identity->username;
-            $model->user_id = Yii::$app->user->identity->id;
-            $model->article_id = $_GET['id'];
+            $model->user_id = $log->from_uid = Yii::$app->user->identity->id;
+            $model->article_id = $log->article_id = $_GET['id'];
+            $log->to_uid = $_GET['author'];
+            $log->content = $model->content;
             $email = User::findemailbyid($_GET['author']);
-            $model->createdTime = time() + 8 * 3600;
-            //$model->send_email($model->username, $email);
-            $article->username = 'fuck';
-            if($model->save()&&$article->save()) {
+            $model->createdTime = $log->created_time = time() + 8 * 3600;
+        //$log->goit($model->user_id,$_GET['author'],$model->article_id,'',$model->createdTime,$model->content);
+//        if($log->goit($model->user_id,$_GET['author'],$model->article_id,'',$model->createdTime,$model->content)) {
+//            return $this->renderAjax('/comment/content', ['model' => $model, 'id' => $model->article_id]);
+//        }else{
+//            echo "wrong";
+//            exit;
+//        }
+        //$log->hello(1);
+//            $t = $log->goit($model->user_id,$_GET['author'],$model->article_id,'',$model->createdTime,$model->content);
+//            if($log->save()){
+//                echo "yes";
+//            }else{
+//                echo json_encode($log->errors);
+//            }
+//            exit;
+            $model->send_email($model->username, $email);
+            if($model->save()&&$log->goit($model->user_id,$_GET['author'],$model->article_id,'',$model->createdTime,$model->content)) {
                 $transaction->commit();
             }else{
 //                Yii::error("it is wrong!");
@@ -59,7 +77,7 @@ public $enableCsrfValidation = false;
             //echo json_encode($e);
             //exit;
             $transaction->rollBack();
-            echo "rollback";
+            echo "fff";
             exit;
             return $this->render('error', ['exception' => $e]);
             //Yii::error("it is wrong!");
@@ -71,7 +89,8 @@ public $enableCsrfValidation = false;
     }
     public function actionCreateson(){
 
-        //$model = new Comment();
+        $model = new Comment();
+        $log = new Log();
  //       $model->load(Yii::$app->request->post());
 	   $model->content = $_GET['content'];
         $model->username = Yii::$app->user->identity->username;
@@ -81,8 +100,10 @@ public $enableCsrfValidation = false;
         if(isset($_GET['towho'])){
             $model->towho = $_GET['towho'];
         }
+        $to_uid = isset($_GET['towho'])?$_GET['towho']:$model->parent_id;
         $model->createdTime = time()+8*3600;
-        if($model->save()){
+        //$t = $log->goit($model->user_id,$to_uid,' ',$model->parent_id,$model->createdTime,$model->content);
+        if($model->save()&&$log->goit(1,$to_uid,'',$model->parent_id,$model->createdTime,$model->content)){
               //  echo "1232";
 //            return $this->renderAjax('/comment/_content',['model'=>$model]);
 //            return $this->renderAjax('commentlist',['id'=>$_GET['article_id']]);
@@ -129,7 +150,7 @@ public $enableCsrfValidation = false;
                 echo "done";
                 exit;
             }else{
-                echo $user_id.$comment_id;
+                echo $comment_id;
                 exit;
             }
         }
@@ -154,7 +175,7 @@ public $enableCsrfValidation = false;
                     exit;
                 }
             }else{
-                echo "short";
+                echo "short"    ;
                 exit;
             }
 

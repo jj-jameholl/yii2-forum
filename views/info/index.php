@@ -105,6 +105,9 @@ padding-left:10px;
         margin-top: 20px;
         padding:10px;
     }
+    .about{
+        background-color:#eee;
+    }
     </style>
 <div class="container">
 <div class="col-sm-2">
@@ -174,7 +177,19 @@ padding-left:10px;
         </ul>
         <div id="mytabs" class="tab-content">
             <div id="done" class="tab-pane fade in active">
-            <h2>这里写我们的动态,比如说评论,写文章等等</h2>
+                <?php for($i=0;$i<5;$i++) {?>
+                <div class="basic-div about">
+                    <p>没有找到相关数据</p>
+                    </div>
+                <?php }?>
+               <!-- <?php $form=ActiveForm::begin([
+                    'options' => ['enctype' => 'multipart/form-data'],
+                    'action'=>['/info/upload'],
+                    'method'=>'post',
+                    ])?>
+                <?=$form->field($file,'file')->fileInput()?>
+                <?=Html::submitButton('上传',['class'=>'btn btn-success'])?>
+                <?php $form=ActiveForm::end()?>-->
             </div>
             <div class="tab-pane fade" id="basic">
                 <div class="basic-div">

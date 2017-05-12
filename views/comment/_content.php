@@ -35,7 +35,7 @@ $this->registerJs(
                     $.pjax.reload({container:"#comments"});
                     }
                     else{
-                    alert("error");
+                    alert(data.error());
                     }
                 }
             });

@@ -18,7 +18,8 @@ use ReflectionClass;
 use yii\filters\AccessControl;
 use yii\web\IdentityInterface;
 use app\models\User;
-//use app\models\Article;
+use app\models\Article;
+//use Article;
 use app\models\Note;
 use yii\web\Controller;
 use app\models\Tags;
@@ -31,9 +32,12 @@ use app\models\Comment;
 use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
+use app\models\Log;
 
 class ArticleController extends Controller{
     public $enableCsrfValidation = false;
+    public $test;
+
     public function behaviors(){
         return [
            // 'access'=>[
@@ -183,8 +187,8 @@ class ArticleController extends Controller{
         //echo $t;
        // exit;
        // throw new ServerErrorHttpException();
-        $model = new Comment;
-        $article= new Comment;
+//        $model = new Comment;
+//        $article= new Comment;
 
 
         //$transaction = Yii::$app->db->beginTransaction();
@@ -205,11 +209,15 @@ class ArticleController extends Controller{
 //             exit;
 //         }
 
+
 //       Yii::$container->set('Article','app\models\Article');
-//       $test = Yii::$container->get('Article');
+        //Yii::$container->set('Article','app\models\Comment');
+//      $test = Yii::$container->get('Article');
 //        //$reflect=new ReflectionClass($test);
-//        //$test = new Article();
-//        $test->test1();
+//$test = new Article();
+ //       $test->test2();
+       //print_r($test);
+ //       exit;
 //        $test->test2();
         //echo json_encode($reflect->getMethod('test1'));
         //exit;
@@ -269,10 +277,11 @@ class ArticleController extends Controller{
 //        exit;
 
 
-//        $file = dirname(__DIR__).'/models/Article.php';
+//      echo dirname(__DIR__).'/models/Article.php';
+//        exit;
 //        include($file);
 
-        $model = new \Article;
+        $model = new Article;
 
 //        echo Yii::getAlias('@' . str_replace('\\', '/', 'app\models\Article') . '.php', false);
 //        exit;
@@ -300,7 +309,7 @@ class ArticleController extends Controller{
         return $this->render('index',['dataProvider'=>$dataProvider]);  
   }
 	    public function actionEdit(){
-            $model = new Article();
+            $model = new Article;
            // $model->start();
         $model = Article::find()->where(['id'=>$_GET['article_id']])->one();
         return $this->render('create',['model'=>$model,'id'=>$_GET['article_id']]);
