@@ -14,6 +14,7 @@ $this->registerJs('
 	$(".comment-form").find("input").filter(".input1").val($(this).parent().attr("class"));
 //    $(".comment-form").closest(".list-view").attr("id");
     $(".comment-form").find("input").filter(".input2").val($(this).closest(".list-view").attr("id"));
+        $(".comment-form").find("input").filter(".input4").val($("#ar_id").val());
     });
 ');
 ?>

@@ -185,14 +185,14 @@ padding-left:10px;
                     //'layout'=>'{items}',
                     'summary'=>false,
                 ])?>
-               <!-- <?php $form=ActiveForm::begin([
-                    'options' => ['enctype' => 'multipart/form-data'],
-                    'action'=>['/info/upload'],
-                    'method'=>'post',
-                    ])?>
-                <?=$form->field($file,'file')->fileInput()?>
-                <?=Html::submitButton('上传',['class'=>'btn btn-success'])?>
-                <?php $form=ActiveForm::end()?>-->
+<!--               <!-- --><?php //$form=ActiveForm::begin([
+//                    'options' => ['enctype' => 'multipart/form-data'],
+//                    'action'=>['/info/upload'],
+//                    'method'=>'post',
+//                    ])?><!---->
+<!--               $form->field($file,'file')->fileInput()-->
+<!--                Html::submitButton('上传',['class'=>'btn btn-success'])-->
+<!--                --><?php //$form=ActiveForm::end()?><!-- -->
             </div>
             <div class="tab-pane fade" id="basic">
                 <div class="basic-div">

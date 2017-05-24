@@ -53,6 +53,7 @@ $this->registerJs(
 <input type="hidden" class="input1" name="towho">
 <input type="hidden" class="input2" name="id">
 <input type="hidden" class="input3" id="writer">
+<input type="hidden" class="input4" id="article_id">
 <input type="button" class="btn btn-success" id="submit" value="提交">
 <?php ActiveForm::end()?>
 

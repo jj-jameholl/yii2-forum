@@ -32,6 +32,23 @@ AppAsset::addCss($this,'/font/dist/css/bootstrap.min.css');
    <!-- <script src="/Flat/docs/assets/js/application.js"></script>-->
 	<script src="/layer-v2.4/layer/layer.js"></script>
 <style type="text/css">
+    .pagination > li > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span, .pagination > li:first-child > a{
+        margin-left: 8px;
+        border-radius: 20px;
+        background-color:#eee ;
+        padding:2px 8px;
+        border-color:#f5f5f5 ;
+    }
+    .pagination >.active > a {
+        background-color: #1cd388;
+        border-color:#f5f5f5;
+    }
+    .pagination > .active > a:hover{
+        background-color: #1abc9c;
+    }
+    .pagination > li > a:hover{
+        background-color: #f5f5f5;
+    }
 .image{
 height:38px;
 width:38px;

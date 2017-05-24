@@ -103,7 +103,7 @@ public $enableCsrfValidation = false;
         $to_uid = isset($_GET['towho'])?$_GET['towho']:$model->parent_id;
         $model->createdTime = time()+8*3600;
         //$t = $log->goit($model->user_id,$to_uid,' ',$model->parent_id,$model->createdTime,$model->content);
-        if($model->save()&&$log->goit(1,$to_uid,'',$model->parent_id,$model->createdTime,$model->content)){
+        if($model->save()&&$log->goit($model->user_id,$to_uid,$_GET['article_id'],$model->parent_id,$model->createdTime,$model->content)){
               //  echo "1232";
 //            return $this->renderAjax('/comment/_content',['model'=>$model]);
 //            return $this->renderAjax('commentlist',['id'=>$_GET['article_id']]);

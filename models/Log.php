@@ -43,4 +43,7 @@ class Log extends \yii\db\ActiveRecord
         $user = User::findOne(['id'=>$this->from_uid]);
         return $user;
     }
+    public function getArticle(){
+        return $this->hasOne(Article::className(),['id'=>'article_id']);
+}
 }

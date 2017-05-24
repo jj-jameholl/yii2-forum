@@ -1,10 +1,13 @@
+<?php
+use yii\helpers\Url;
+?>
 <style>
     .log{
         padding-top: 10px;
         padding-bottom: 10px;
 
     }
-    .image {
+    .image1 {
         margin-top: -2px;
     }
     .pagination > li > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span, .pagination > li:first-child > a{
@@ -13,15 +16,19 @@
         background-color:#eee ;
     }
     .pagination >.active > a {
-        background-color: #1abc9c;
+        background-color: #1cd388;
     }
     .pagination > .active > a:hover{
-        background-color: #16a085;
+        background-color: #1abc9c;
     }
     .pagination > li > a:hover{
-        background-color: #eee;
+        background-color: #f5f5f5;
     }
 </style>
 <div class="basic-div">
-    <img class="image" src="/uploads/avatar/<?=$model->fuser->id?>/<?=$model->fuser->photo?>"><?=$model->fuser->username.' 回复您: '.$model->content;?>
+    <?php if(empty($model->comment_id)){?>
+    <a href="<?=Url::toRoute(['/info/look','id'=>$model->fuser->id])?>"><img class="image image1" src="/uploads/avatar/<?=$model->fuser->id?>/<?=$model->fuser->photo?>"></a> <?=$model->fuser->username.'评论您的文章《'.$model->article->article.'》: '.$model->content;?>
+    <?php }else{?>
+    <a href="<?=Url::toRoute(['/info/look','id'=>$model->fuser->id])?>"><img class="image image1" src="/uploads/avatar/<?=$model->fuser->id?>/<?=$model->fuser->photo?>"></a> <?=$model->fuser->username.'在《'.$model->article->article.'》回复您的评论: '.$model->content;?>
+    <?php }?>
 </div>

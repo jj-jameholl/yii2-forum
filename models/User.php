@@ -82,11 +82,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasMany(Article::className(),['user_id'=>'id']);
     }
     public function getLog(){
-        $data = Log::find()->where(['to_uid'=>$this->id])->orderBy('id DESC');
+        $data = Log::find()->with('article')->where(['to_uid'=>$this->id])->orderBy('id DESC');
         $dataprovide = new ActiveDataProvider([
             'query' => $data,
             'pagination'=>[
-                'pageSize'=>8,
+                'pageSize'=>6,
             ],
         ]);
         return $dataprovide;
