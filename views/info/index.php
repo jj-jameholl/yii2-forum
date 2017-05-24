@@ -8,6 +8,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ListView;
 ?>
 <style>
     .leff{
@@ -177,11 +178,13 @@ padding-left:10px;
         </ul>
         <div id="mytabs" class="tab-content">
             <div id="done" class="tab-pane fade in active">
-                <?php foreach($user->log as $log) {?>
-                    <div class="basic-div about">
-                        <p><?=$log->content?></p>
-                    </div>
-                <?php }?>
+                <?=ListView::widget([
+                    'id'=>'log',
+                    'dataProvider'=>$user->log,
+                    'itemView'=>'/info/_log',
+                    //'layout'=>'{items}',
+                    'summary'=>false,
+                ])?>
                <!-- <?php $form=ActiveForm::begin([
                     'options' => ['enctype' => 'multipart/form-data'],
                     'action'=>['/info/upload'],
@@ -262,7 +265,7 @@ padding-left:10px;
             </div>
                 </div>
     </div>
-    </div>
+        </div>
     </div>
 </div>
 <a href="<?=Url::ToRoute('/info/download')?>">下载</a>

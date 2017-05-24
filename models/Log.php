@@ -8,6 +8,7 @@
 namespace app\models;
 
 use yii;
+use app\models\User;
 //use yii\base\Object;
 
 class Log extends \yii\db\ActiveRecord
@@ -37,5 +38,9 @@ class Log extends \yii\db\ActiveRecord
     public function hello($name){
         echo "hello world".$name;
         exit;
+    }
+    public function getfuser(){
+        $user = User::findOne(['id'=>$this->from_uid]);
+        return $user;
     }
 }

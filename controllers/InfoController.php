@@ -41,7 +41,7 @@ public function behaviors()
     }
 public function actionIndex(){
     $upload = new Upload;
-    $user = User::find()->with('log')->where(['id'=>Yii::$app->user->identity->id])->one();
+    $user = User::find()->where(['id'=>Yii::$app->user->identity->id])->one();
 //    print_r($user->log);
 //    exit;
     return $this->render('index',['user'=>$user,'file'=>$upload]);

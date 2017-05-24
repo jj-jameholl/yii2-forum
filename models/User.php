@@ -3,9 +3,11 @@
 namespace app\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use app\models\Log;
 
 /**
  * This is the model class for table "User".
@@ -80,7 +82,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasMany(Article::className(),['user_id'=>'id']);
     }
     public function getLog(){
-        return $this->hasMany(Log::className(),['to_uid'=>'id']);
+        $data = Log::find()->where(['to_uid'=>$this->id])->orderBy('id DESC');
+        $dataprovide = new ActiveDataProvider([
+            'query' => $data,
+            'pagination'=>[
+                'pageSize'=>8,
+            ],
+        ]);
+        return $dataprovide;
     }
     public static function findIdentity($id)
     {
