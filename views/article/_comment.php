@@ -123,7 +123,7 @@ $dataprovider_son = $model->search_son($model->id);
     </head>
 <div class="media">
 <a class="media-left" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>">
-<img src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment" title=<?=User::findrolebyid($model->user_id)?>&nbsp;: data-toggle="popover" data-trigger="hover" data-placement="right" data-content=<?=User::findsignbyid($model->user_id)?>>
+<img src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment img_popover" data-content="<?=rand(0,99)?>">
 </a>
     <div class="media-body">
         <div class="media-heading">

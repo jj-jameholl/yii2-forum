@@ -43,7 +43,7 @@ $this->registerJs('
 <hr class="hr1">
 <div class="media">
 <div class="media-left">
-   <a href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>"><img href="" src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment_son" title=<?=User::findrolebyid($model->user_id)?>&nbsp;: data-toggle="popover" data-trigger="hover" data-placement="right" data-content=<?=User::findsignbyid($model->user_id)?>></a>
+   <a href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>"><img href="" src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment_son img_popover" data-content="<?=rand(0,99)?>"></a>
 </div>
     <div class="media-body">
     <div class="media-heading">

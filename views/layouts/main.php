@@ -139,7 +139,30 @@ border-radius:25px;
         </div>
 </div>
 <script type="text/javascript">
-var tipsi;
+    $(function () {
+        $(".img_popover").popover({
+            triggle: 'manual',
+            placement: 'left',
+            html: true,
+            content: "22",
+            animation: true,
+            //delay: {"show": 500, "hide": 100}
+        }).on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(this).siblings(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide");
+                }
+            }, 100);
+        });
+    });
+        var tipsi;
         $("#tips").hover(function(){
             tipsi = layer.tips('点击注销登录',this,{tips:[4,'black'],time:0});
         },function(){

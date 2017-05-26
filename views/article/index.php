@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use app\models\User;
+use app\components\Profile;
 $this->title = 'Love Story';
  $this->registerJs(
     '$("document").ready(function(){
@@ -156,27 +157,27 @@ $this->title = 'Love Story';
 <!--            --><?php //$this->endCache();}?>
 		<script>
     $(function (){
-            $(".img_note").popover({
-                triggle: 'manual',
-                placement: 'left',
-                html: true,
-                content: "22",
-                animation: true,
-                //delay: {"show": 500, "hide": 100}
-            }).on("mouseenter", function () {
-                var _this = this;
-                $(this).popover("show");
-                $(this).siblings(".popover").on("mouseleave", function () {
-                    $(_this).popover('destroy');
-                });
-            }).on("mouseleave", function () {
-                var _this = this;
-                setTimeout(function () {
-                    if (!$(".popover:hover").length) {
-                        $(_this).popover("destroy");
-                    }
-                }, 100);
-            });
+//            $(".img_note").popover({
+//                triggle: 'manual',
+//                placement: 'left',
+//                html: true,
+//                //content: "22",
+//                animation: true,
+//                //delay: {"show": 500, "hide": 100}
+//            }).on("mouseenter", function () {
+//                var _this = this;
+//                $(this).popover("show");
+//                $(this).siblings(".popover").on("mouseleave", function () {
+//                    $(_this).popover('hide');
+//                });
+//            }).on("mouseleave", function () {
+//                var _this = this;
+//                setTimeout(function () {
+//                    if (!$(".popover:hover").length) {
+//                        $(_this).popover("hide");
+//                    }
+//                }, 100);
+//            });
 
 
      //另外一个方法,差不多的。。。。
