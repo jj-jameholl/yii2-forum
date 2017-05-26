@@ -12,6 +12,15 @@ $config = [
             'cookieValidationKey' => '123456',
             'enableCsrfValidation' => 'true',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,   // 一定不要发布该资源
+                    'js' => [
+                    ]
+                ],
+            ],
+        ],
      'response'=>[
          'format' => yii\web\Response::FORMAT_HTML,
          'charset' => 'UTF-8',

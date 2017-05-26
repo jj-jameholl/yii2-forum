@@ -49,12 +49,16 @@ AppAsset::addCss($this,'/font/dist/css/bootstrap.min.css');
     .pagination > li > a:hover{
         background-color: #f5f5f5;
     }
+    .dropdown:hover > .dropdown-menu{
+        display:block;
+        transition-duration:1s;
+    }
 .image{
 height:38px;
 width:38px;
 border:1px solid;
 border-color:white;
-margin-top:-10px;
+margin-top:3px;
 border-radius:25px;
 }
     .layui-layer-lan{
@@ -91,7 +95,7 @@ border-radius:25px;
 			<?php }else{?>
 			<li><a href="<?=Url::toRoute(['/article/create'])?>">发布美文</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
 				<img class="image" src="/uploads/avatar/<?=Yii::$app->user->identity->id?>/<?php 
 					if(Yii::$app->user->identity->photo==null){
 					echo "20161120033225_big.jpg";

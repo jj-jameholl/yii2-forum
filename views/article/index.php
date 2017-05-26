@@ -140,7 +140,7 @@ $this->title = 'Love Story';
 
             <br>
 		<div class="panel-body note-body">
-		 <?php Pjax::begin(['id'=>'notess','timeout'=>false,])?>
+
 <!--            --><?php
 //            $dependency = [
 //                'class'=> 'yii\caching\DbDependency',
@@ -156,22 +156,99 @@ $this->title = 'Love Story';
 <!--            --><?php //$this->endCache();}?>
 		<script>
     $(function (){
-        $("[data-toggle='popover']").popover();
-	        $("document").ready(function(){
-            $('.img_note').rotate({
-                duration:1000,
-                bind : {
-                    mouseover : function(){
-                        $(this).rotate({animateTo: 360});
-                    }, mouseout : function(){
-                        $(this).rotate({animateTo: 0});
+            $(".img_note").popover({
+                triggle: 'manual',
+                placement: 'left',
+                html: true,
+                content: "22",
+                animation: true,
+                //delay: {"show": 500, "hide": 100}
+            }).on("mouseenter", function () {
+                var _this = this;
+                $(this).popover("show");
+                $(this).siblings(".popover").on("mouseleave", function () {
+                    $(_this).popover('destroy');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("destroy");
                     }
-                }
+                }, 100);
             });
-        });   
+
+
+     //另外一个方法,差不多的。。。。
+//        $(".img_note").each(function() {
+//            var $p = $(this);
+//            $p.popover({
+//                triggle: 'manual',
+//                placement: 'left',
+//                html: true,
+//                content: $p.attr('rel'),
+//                animation: true,
+//                //delay: {"show": 500, "hide": 100}
+//            }).on("mouseenter", function () {
+//                var _this = this;
+//                $(this).popover("show");
+//                $(this).siblings(".popover").on("mouseleave", function () {
+//                    $(_this).popover('hide');
+//                });
+//            }).on("mouseleave", function () {
+//                var _this = this;
+//                setTimeout(function () {
+//                    if (!$(".popover:hover").length) {
+//                        $(_this).popover("hide");
+//                    }
+//                }, 100);
+//            });
+//        });
+
+
+   //yii2论坛上的方法
+//        $(document).on('mouseenter', '[rel=author]', function() {
+//            var _this = this;
+//            setTimeout(function() {
+//                if ($(_this).is(':hover')) {
+//                    $(_this).popover({
+//                        container: 'body',
+//                        html: true,
+//                        placement: 'auto right',
+//                        content: '<i class="fa fa-4x fa-spinner fa-pulse"></i>'
+//                    }).popover('show');
+//                    $('.popover-content').load($(_this).attr('href'));
+//                    $('.popover').on('mouseleave', function() {
+//                        $(_this).popover('destroy');
+//                    });
+//                }
+//            }, 500);
+//        }).on('mouseleave', '[rel=author]', function() {
+//            var _this = this;
+//            setTimeout(function() {
+//                if ($('.popover').length && !$('.popover').is(':hover')) {
+//                    $(_this).popover('destroy');
+//                }
+//            }, 100);
+//        });
+//        $(".img_note").on("mouseenter",function(){
+//            $(this).popover('show');
+//        });
+//	        $("document").ready(function(){
+//            $('.img_note').rotate({
+//                duration:1000,
+//                bind : {
+//                    mouseover : function(){
+//                        $(this).rotate({animateTo: 360});
+//                    }, mouseout : function(){
+//                        $(this).rotate({animateTo: 0});
+//                    }
+//                }
+//            });
+//        });
  });
 </script>
-            <?php Pjax::end()?>
+
 	</div>
         </div>
 	</div>

@@ -19,7 +19,7 @@ $this->registerJs('
 	$(".comment-form").find("input").filter(".input2").val("");
 	$(".comment-form").find("input").filter(".input3").val("");
     $(".comment-form").find("input").filter(".input2").val($(this).parent().attr("class").split(" ")[0]);
-    $(".comment-form").find("input").filter(".input2").val($(this).parent().attr("class").split(" ")[0]);
+    $(".comment-form").find("input").filter(".input1").val($(this).parent().attr("class").split(" ")[1]);
     $(".comment-form").find("input").filter(".input3").val($(this).parent().attr("class").split(" ")[1]);
     $(".comment-form").find("input").filter(".input4").val($("#ar_id").val());
     });
@@ -29,7 +29,7 @@ $this->registerJs('
       var mythis = $(this);
         $.ajax({
         url:"'.Url::toRoute(["/comment/thumbup"]).'",
-        data:{"user_id":'.Yii::$app->user->identity->id.',"comment_id":$(this).parent().parent().attr("class").split(" ")[1]},
+        data:{"user_id":'.Yii::$app->user->identity->id.',"comment_id":$(this).parent().parent().attr("class").split(" ")[0]},
 //       beforeSend:function(){
 //	        $(".loading").removeClass("hidden");
 // 	      $(".loading").appendTo(mythis);
@@ -56,7 +56,7 @@ $this->registerJs('
         var mythis = $(this);
         $.ajax({
         url:"'.Url::toRoute(["/comment/thumbdown"]).'",
-        data:{"user_id":'.Yii::$app->user->identity->id.',"comment_id":$(this).parent().parent().attr("class")},
+        data:{"user_id":'.Yii::$app->user->identity->id.',"comment_id":$(this).parent().parent().attr("class").split(" ")[0]},
   //             beforeSend:function(){
   //      $(".loading").removeClass("hidden");
   //      $(".loading").appendTo(mythis);

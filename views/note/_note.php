@@ -7,6 +7,8 @@
  */
 use app\models\User;
 use yii\helpers\Url;
+use app\components\TagWidgets;
+use app\models\Tags;
 $this->registerJs('
 $(".thumb-up").click(function(){
       var mythis = $(this);
@@ -102,7 +104,7 @@ $(".thumb-up").click(function(){
 </style>
 <div class="media">
 <div class="media-left">
-   <a href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>"><img src="/uploads/avatar/<?=$model->user_id?>/<?=User::findimgbyid($model->user_id)?>" class="img_note" title=<?=User::findnamebyid($model->user_id)?>&nbsp;: data-toggle="popover" data-trigger="hover" data-placement="left" data-content=<?=User::findsignbyid($model->user_id)?>></a>
+   <a rel="author" class="<?=$model->content?>" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>"><img src="/uploads/avatar/<?=$model->user_id?>/<?=User::findimgbyid($model->user_id)?>" class="img_note" rel="<?=$model->content?>"></a>
 </div>
     <div class="media-body">
     <div class="media-heading note-font">
