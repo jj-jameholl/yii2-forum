@@ -123,11 +123,6 @@ $this->title = 'Love Story';
             <p>来了就留下两句呗&nbsp;&nbsp;<i class="glyphicon glyphicon-send"></i></p>
         </div>
             <?php
-            $dependency = [
-                'class'=>'yii\caching\DbDependency',
-                'sql'=>'select max(createdtime) from Note',
-            ];
-            if($this->beginCache('note',['dependency'=>$dependency])) {
             $form = ActiveForm::begin([
                 'options'=>['data-pjax'=>'true'],
             ]);?>
@@ -136,7 +131,6 @@ $this->title = 'Love Story';
                 <span><input type="button" class="btn btn-primary btn-note" id="note-go" value="留言"></span>
             </div>
             <?php ActiveForm::end();
-            $this->endCache();}
             ?>
 
             <br>

@@ -122,8 +122,8 @@ $dataprovider_son = $model->search_son($model->id);
 
     </head>
 <div class="media">
-<a class="media-left" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>">
-<img src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment img_popover" data-content="<?=rand(0,99)?>">
+<a class="media-left" rel="author" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>">
+<img src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment">
 </a>
     <div class="media-body">
         <div class="media-heading">

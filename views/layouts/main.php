@@ -13,6 +13,7 @@ $this->title = 'Love Story';
 AppAsset::register($this);
 AppAsset::addCss($this,'/Flat/dist/css/flat-ui.css');
 AppAsset::addCss($this,'/font/dist/css/bootstrap.min.css');
+AppAsset::addCss($this,'/font/dist/css/profile.css');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -109,7 +110,7 @@ border-radius:25px;
 				 <li><a href="#"><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;&nbsp;我的收藏</a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;&nbsp;我的相册</a></li>
                                 <li class="divider"></li>
-                        	<li id="tips"><a href="<?=Url::toRoute(['/site/logout'])?>" data-method="post"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;&nbsp;退出登录</a></li>
+                        	<li class="logout"><a href="<?=Url::toRoute(['/site/logout'])?>" data-method="post"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;&nbsp;退出登录</a></li>
 			     <!--  <li><?php
                                     echo Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form']);
 					 echo Html::submitButton(
@@ -140,24 +141,27 @@ border-radius:25px;
 </div>
 <script type="text/javascript">
     $(function () {
-        $(".img_popover").popover({
-            triggle: 'manual',
-            placement: 'left',
-            html: true,
-            content: "22",
-            animation: true,
-            //delay: {"show": 500, "hide": 100}
-        }).on("mouseenter", function () {
+        $(".logout").tooltip({
+            title:'点击退出',
+            placement:'left',
+        });
+        $(document).on('mouseenter', '[rel=author]', function() {
             var _this = this;
-            $(this).popover("show");
-            $(this).siblings(".popover").on("mouseleave", function () {
-                $(_this).popover('hide');
-            });
-        }).on("mouseleave", function () {
+                    $(_this).popover({
+                        html: true,
+                        placement: 'right',
+                        content: '<p></p>'
+                    }).popover('show');
+                    $('.popover-content').load($(_this).attr('href'));
+                    $('.popover').on('mouseleave', function() {
+                        $(_this).popover('destroy');
+                    });
+        }).on('mouseleave', '[rel=author]', function() {
             var _this = this;
-            setTimeout(function () {
+            setTimeout(function() {
                 if (!$(".popover:hover").length) {
-                    $(_this).popover("hide");
+                    $(_this).popover('destroy');
+                    //alert(JSON.stringify($(".popover:hover")));
                 }
             }, 100);
         });
@@ -168,6 +172,25 @@ border-radius:25px;
         },function(){
             layer.close(tipsi);
         });
+//    $(document).on('mouseenter', '[rel=author]', function(){
+//        var _this = this;
+//        setTimeout(function () {
+//            if($(_this).is(':hover')) {
+//                $(_this).popover({container: 'body', html: true, placement: 'auto right', content: '<i class="fa fa-4x fa-spinner fa-pulse"></i>'}).popover('show');
+//                $('.popover-content').load($(_this).attr('href'));
+//                $('.popover').on('mouseleave', function () {
+//                    $(_this).popover('destroy');
+//                });
+//            }
+//        }, 500);
+//    }).on('mouseleave', '[rel=author]', function () {
+//        var _this = this;
+//        setTimeout(function () {
+//            if($('.popover').length && !$('.popover').is(':hover')) {
+//                $(_this).popover('destroy');
+//            }
+//        }, 100);
+//    });
 </script>
     <div class="container"style="padding-left:0px;padding-right:0px">
         <?= Breadcrumbs::widget([
