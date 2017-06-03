@@ -93,7 +93,7 @@ $this->title = $article->article;
             if($this->beginCache($article->article,['dependency'=>$dependency])) {?>
         <h2><?=Html::encode($article->article)?></h2>
             <div class="info">
-               <a href="<?=Url::toRoute(['/info/look','id'=>$article->user->id])?>"><img class="img" src="/uploads/avatar/<?=$article->user->id?>/<?=$article->user->photo?>" title=<?=$article->user->role?>&nbsp;: data-toggle="popover" data-trigger="hover" data-placement="right" data-content=<?=$article->user->sign?>></a>&nbsp;<?=$article->user->username?>&nbsp;&nbsp;
+               <a rel="author" href="<?=Url::toRoute(['/info/look','id'=>$article->user->id])?>"><img class="img" src="/uploads/avatar/<?=$article->user->id?>/<?=$article->user->photo?>"></a>&nbsp;<?=$article->user->username?>&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-time"></span><?=date('Y-m-d H:i',$article->created)?>&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-pencil" ></span><?='评论:'.Comment::count($article->id)?>&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-heart-empty" ></span>&nbsp;<?=$article->loves?>&nbsp;
@@ -209,11 +209,6 @@ $this->title = $article->article;
 </div>
 </div>
 </div>
-<script>
-    $(function (){
-        $("[data-toggle='popover']").popover();
-    });
-</script>
 <script type="text/javascript">
     var tipsi;
     $("#reedit").hover(function(){

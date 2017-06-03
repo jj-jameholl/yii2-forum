@@ -13,7 +13,6 @@ $this->title = 'Love Story';
 AppAsset::register($this);
 AppAsset::addCss($this,'/Flat/dist/css/flat-ui.css');
 AppAsset::addCss($this,'/font/dist/css/bootstrap.min.css');
-AppAsset::addCss($this,'/font/dist/css/profile.css');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -71,6 +70,10 @@ border-radius:25px;
     }
     .layui-layer-content{
         padding:5px;
+    }
+    .test{
+        width:220px;
+        height:180px;
     }
 </style>
 </head>
@@ -148,9 +151,10 @@ border-radius:25px;
         $(document).on('mouseenter', '[rel=author]', function() {
             var _this = this;
                     $(_this).popover({
+                        container:'body',
                         html: true,
-                        placement: 'right',
-                        content: '<p></p>'
+                        placement: 'auto right',
+                        content: '<div class="test"><img src="load.gif" style="padding-left:100px;padding-top:70px"></div>'
                     }).popover('show');
                     $('.popover-content').load($(_this).attr('href'));
                     $('.popover').on('mouseleave', function() {

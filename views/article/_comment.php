@@ -122,12 +122,12 @@ $dataprovider_son = $model->search_son($model->id);
 
     </head>
 <div class="media">
-<a class="media-left" rel="author" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>">
+<a rel="author" class="media-left" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>">
 <img src="/uploads/avatar/<?=$model->user_id?>/<?=$model->img?>" class="img_comment">
 </a>
     <div class="media-body">
         <div class="media-heading">
-            <a href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>"><?=User::findnamebyid($model->user_id)?></a>&nbsp;&nbsp;&nbsp;评论于<?=date('Y-m-d H:i',$model->createdTime)?><a class="jubao" href=""><span class="glyphicon glyphicon-envelope"></span>举报</a>
+            <a rel="author" href="<?=Url::toRoute(['/info/look','id'=>$model->user_id])?>"><?=User::findnamebyid($model->user_id)?></a>&nbsp;&nbsp;&nbsp;评论于<?=date('Y-m-d H:i',$model->createdTime)?><a class="jubao" href=""><span class="glyphicon glyphicon-envelope"></span>举报</a>
         </div>
             <p><?=yii\helpers\Markdown::process($model->content)?></p>
         <?php if($dataprovider_son->getTotalCount()!=0){?>
