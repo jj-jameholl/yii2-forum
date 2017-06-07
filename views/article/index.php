@@ -259,4 +259,6 @@ $this->title = 'Love Story';
                 </div>
         </div>
     </div>
+<input type="button" class="btn btn-success chart" value="hello">
+
 <div class="loading hidden"><img src="/1.gif"></div>

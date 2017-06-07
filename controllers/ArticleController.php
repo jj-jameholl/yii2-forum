@@ -166,6 +166,9 @@ class ArticleController extends Controller{
         }
         return $this->render('create',['model'=>$model]);
     }
+    public function actionChart(){
+        return $this->render('cart');
+    }
     public function actionIndex(){
 //        if(class_exists('Article',false)){
 //            echo "33";

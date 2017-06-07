@@ -30,7 +30,7 @@ AppAsset::addCss($this,'/font/dist/css/bootstrap.min.css');
    <!-- <script src="/Flat/dist/js/vendor/video.js"></script>-->
     <script src="/Flat/dist/js/flat-ui.min.js"></script>
    <!-- <script src="/Flat/docs/assets/js/application.js"></script>-->
-	<script src="/layer-v2.4/layer/layer.js"></script>
+    <script src="/echarts/build/dist/echarts-all.js"></script>
 <style type="text/css">
     .pagination > li > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span, .pagination > li:first-child > a{
         margin-left: 8px;
@@ -93,6 +93,7 @@ border-radius:25px;
                 <div id="navbar-collapse-01">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<?=Url::toRoute(['/article/index'])?>">主页<span class="badge">3</span></a></li>
+                        <li><a href="<?=Url::toRoute(['/article/chart'])?>">图表</a></li>
 			<?php if(Yii::$app->user->isGuest){?>
 			<li><a href="#fakelink">关于我们</a></li>
 			<li><a href="<?=Url::toRoute(['/site/login'])?>">登录</a></li>
@@ -169,6 +170,17 @@ border-radius:25px;
                 }
             }, 100);
         });
+        $(document).on('mouseenter', '.chart', function() {
+            var _this = this;
+            $(_this).popover({
+                container:'body',
+                html: true,
+                placement: 'auto right',
+                content: '<div class="test"><img src="load.gif" style="padding-left:100px;padding-top:70px"></div>'
+            }).popover('show');
+            $('.popover-content').load('/article/chart.html');
+
+        })
     });
         var tipsi;
         $("#tips").hover(function(){
