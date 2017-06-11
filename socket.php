@@ -23,8 +23,9 @@ while (true) {
     //socket_select($changed, $null, $null, 0, 10);
 
     //如果有新连接,则改变$changed值,在一开始启动,$changed句柄没发生任何改变,则后面的changed为空,不执行任何动作,当一个客户端尝试连接时,$changed中的服务器句柄resource(4)会得到响应,因此后面的$changed不为空,为发生了改变的
-    //resource(4),下一步in_array就能执行了,if函数最后返回的changed也为空(没改变的状态就为空),但是client就是客户列表了,因为client为空,就不会执行后面的foreach函数,又返回到socket_select这一步进行
+    //resource(4),下一步in_array就能执行了,if函数最后返回的changed也为空(没改变的状态就为空),但是client就是客户列表了,因为changed为空,就不会执行后面的foreach函数,又返回到socket_select这一步进行
     //监听,此时的正常情况下还是为空,不过我们在客户端创建连接的时候有像服务器发送信息,也就是resource(5)句柄会得到响应,$chengd就是resource(5)了,in_array()就不会执行,直接到foreach进行了。
+    //socket_select也不是一直监视,只有运行到当前代码才检测,发现有变化了就不运行了,进行下面的代码,下面的代码处理完了,又循环到这一行,这才开始继续监视
     socket_select ($changed, $null, $null,0,10);
     //如果有新的连接
     //print_r($changed);
@@ -50,8 +51,8 @@ while (true) {
             //把消息发送回所有连接的 client 上去
 //            $response_text = mask(json_encode(array('name'=>"zhan", 'message'=>"已经上线了!")));
 //            send_message($response_text);
-//        $response = mask(json_encode(array('type'=>'system', 'message'=>'connected')));
-//        send_message($response);
+        $response = mask(json_encode(array('type'=>'system', 'message'=>'connected')));
+        send_message($response);
         $found_socket = array_search($socket, $changed);
         print_r($changed);
         print_r($socket);
@@ -62,10 +63,12 @@ while (true) {
     //轮询 每个client socket 连接
     //如果不单独放这里,放在前面建立连接的函数中,后面发送数据的时候就没法得到回应,因为那时发生改变的是resource(5),resource(4)不在其中,就不会执行发送了
     foreach ($changed as $changed_socket) {
+        //传来数据必须要读取出来(并且取完!!!),不然每次select的时候都会发现这个$changed有数据,会一直触发这个foreach
         print_r($changed);
         //如果有client数据发送过来
         print_r($changed_socket);
-        while(socket_recv($changed_socket, $buf, 1024, 0) >= 1)
+        //print_r(socket_read($changed_socket,40));
+        if(socket_recv($changed_socket, $buf, 1024, 0) >= 1)
         {
             //解码发送过来的数据
             $received_text = unmask($buf);
@@ -73,18 +76,18 @@ while (true) {
             //把消息发送回所有连接的 client 上去
             $response_text = mask(json_encode(array('type'=>'usermsg', 'name'=>"zhan", 'message'=>$received_text)));
             send_message($response_text);
-            break 2;
+
         }
 
         //检查offline的client
-        $buf = @socket_read($changed_socket, 1024, PHP_NORMAL_READ);
-        if ($buf === false) {
-            $found_socket = array_search($changed_socket, $clients);
-            socket_getpeername($changed_socket, $ip);
-            unset($clients[$found_socket]);
-            $response = mask(json_encode(array('type'=>'system', 'message'=>$ip.' disconnected')));
-            send_message($response);
-        }
+//        $buf = @socket_read($changed_socket, 1024, PHP_NORMAL_READ);
+//        if ($buf === false) {
+//            $found_socket = array_search($changed_socket, $clients);
+//            socket_getpeername($changed_socket, $ip);
+//            unset($clients[$found_socket]);
+//            $response = mask(json_encode(array('type'=>'system', 'message'=>$ip.' disconnected')));
+//            send_message($response);
+//        }
     }
 }
 // 关闭监听的socket
