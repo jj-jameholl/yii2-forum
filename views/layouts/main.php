@@ -230,57 +230,57 @@ border-radius:25px;
 <?php $this->endPage() ?>
 <?php if(isset(Yii::$app->user->identity->id)) {?>
 <script>
-    $("document").ready(function(){
-        ws = new WebSocket("ws://127.0.0.1:1234");
-        ws.onopen = function(){
-            var data = {"kind":"id","id":<?=Yii::$app->user->identity->id?>};
-            ws.send(JSON.stringify(data));
-        }
-        ws.onmessage = function(e) {
-//            alert("fff");
-            var message = JSON.parse(e.data);
-            if(message.kind == "note") {
-                layer.open({
-                    type: 1,
-                    //time: 10000,
-                    skin: 'layui-layer-lan',
-                    offset: ["60px", "80%"],
-                    area: ["18%", "50px"],
-                    title: false,
-                    shade: 0,
-                    closeBtn: 0,
-                    shift: 6,
-                    content:"<img src='/uploads/avatar/"+message.id+"/"+message.photo+"' style='width:40px;height:40px;border-radius: 5px'>&nbsp;"+"<em class='push'>"+message.content+"</em>"
-                });
-            }
-            else if(message.kind == "reponse"){
-                layer.open({
-                    type: 1,
-                    //time: 10000,
-                    skin: 'layui-layer-lan',
-                    offset: ["60px", "80%"],
-                    area: ["18%", "50px"],
-                    title: false,
-                    shade: 0,
-                    closeBtn: 0,
-                    shift: 4,
-                    content:"<a href='../../article/"+message.article_id+"'><img src='/uploads/avatar/"+message.user_id+"/"+message.photo+"' style='width:40px;height:40px;border-radius: 5px'>&nbsp;"+"<em class='push'>评论了您的文章《"+message.article+"》</em></a>"
-                });
-            }else if(message.kind == "reponse1"){
-                layer.open({
-                    type: 1,
-                    //time: 10000,
-                    skin: 'layui-layer-lan',
-                    offset: ["60px", "80%"],
-                    area: ["18%", "50px"],
-                    title: false,
-                    shade: 0,
-                    closeBtn: 0,
-                    shift: 5,
-                    content:"<a href='../../article/"+message.article_id+"'><img src='/uploads/avatar/"+message.user_id+"/"+message.photo+"' style='width:40px;height:40px;border-radius: 5px'>&nbsp;"+"<em class='push'>回复了您的评论 : "+message.content+"</em></a>"
-                });
-            }
-        }
-    });
+//    $("document").ready(function(){
+//        ws = new WebSocket("ws://127.0.0.1:1234");
+//        ws.onopen = function(){
+//            var data = {"kind":"id","id":<?//=Yii::$app->user->identity->id?>//};
+//            ws.send(JSON.stringify(data));
+//        }
+//        ws.onmessage = function(e) {
+////            alert("fff");
+//            var message = JSON.parse(e.data);
+//            if(message.kind == "note") {
+//                layer.open({
+//                    type: 1,
+//                    //time: 10000,
+//                    skin: 'layui-layer-lan',
+//                    offset: ["60px", "80%"],
+//                    area: ["18%", "50px"],
+//                    title: false,
+//                    shade: 0,
+//                    closeBtn: 0,
+//                    shift: 6,
+//                    content:"<img src='/uploads/avatar/"+message.id+"/"+message.photo+"' style='width:40px;height:40px;border-radius: 5px'>&nbsp;"+"<em class='push'>"+message.content+"</em>"
+//                });
+//            }
+//            else if(message.kind == "reponse"){
+//                layer.open({
+//                    type: 1,
+//                    //time: 10000,
+//                    skin: 'layui-layer-lan',
+//                    offset: ["60px", "80%"],
+//                    area: ["18%", "50px"],
+//                    title: false,
+//                    shade: 0,
+//                    closeBtn: 0,
+//                    shift: 4,
+//                    content:"<a href='../../article/"+message.article_id+"'><img src='/uploads/avatar/"+message.user_id+"/"+message.photo+"' style='width:40px;height:40px;border-radius: 5px'>&nbsp;"+"<em class='push'>评论了您的文章《"+message.article+"》</em></a>"
+//                });
+//            }else if(message.kind == "reponse1"){
+//                layer.open({
+//                    type: 1,
+//                    //time: 10000,
+//                    skin: 'layui-layer-lan',
+//                    offset: ["60px", "80%"],
+//                    area: ["18%", "50px"],
+//                    title: false,
+//                    shade: 0,
+//                    closeBtn: 0,
+//                    shift: 5,
+//                    content:"<a href='../../article/"+message.article_id+"'><img src='/uploads/avatar/"+message.user_id+"/"+message.photo+"' style='width:40px;height:40px;border-radius: 5px'>&nbsp;"+"<em class='push'>回复了您的评论 : "+message.content+"</em></a>"
+//                });
+//            }
+//        }
+//    });
 </script>
 <?php }?>
