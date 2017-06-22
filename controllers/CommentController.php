@@ -117,7 +117,7 @@ public $enableCsrfValidation = false;
 
        public function actionThumbup(){
         $comment_id = $_GET["comment_id"];
-        $user_id = $_GET["user_id"];
+        $user_id = Yii::$app->user->identity->id;
         $new_updown = new Updown();
         $comment = Comment::find()->where(['id'=>$comment_id])->one();
         $updown = Updown::find()->where(['comment_id'=>$comment_id,'user_id'=>$user_id])->orderBy('createdtime DESC')->one();

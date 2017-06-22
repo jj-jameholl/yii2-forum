@@ -19,8 +19,7 @@ $this->registerJs(
 //        });
             $("#submit").click(function(){
             if($(this).parent().find("input").filter(".input1").val()==""){
-                var data = {"kind":"reponse1","content":$(this).parent().find("textarea").val(),"article_id":'.$id.',"writer_id":$("#writer").val(),"user_id":'.Yii::$app->user->identity->id.',"photo":"'.User::findimgbyid(Yii::$app->user->identity->id).'"}
-                ws.send(JSON.stringify(data));
+
             }
 		var my = $(this);
             $.ajax({

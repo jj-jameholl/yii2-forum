@@ -52,6 +52,10 @@ while (true) {
 //            $response_text = mask(json_encode(array('name'=>"zhan", 'message'=>"已经上线了!")));
 //            send_message($response_text);
         $response = mask(json_encode(array('type'=>'system', 'message'=>'connected')));
+        //说明握手完成后立马接受到客户端send的数据
+//        if(socket_recv($socket_new,$buf,1024,0)>=1){
+//            print_r(unmask($buf));
+//        }
         send_message($response);
         $found_socket = array_search($socket, $changed);
         print_r($changed);

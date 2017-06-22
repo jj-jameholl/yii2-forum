@@ -33,11 +33,7 @@ $this->registerJs(
 <hr>
 <script>
     $("document").ready(function() {
-        var data = {"kind": "reponse","article_id":$("#article_id").val(),"photo":"<?=User::findimgbyid(Yii::$app->user->identity->id)?>","user_id":"<?=Yii::$app->user->identity->id?>", "writer_id": $("#writer_id").val(),"article":$("#article_title").val()};
-        $("#reponse").click(function () {
-            ws.send(JSON.stringify(data));
-//            alert("dd");
-        });
+
     });
     </script>
 <?php ActiveForm::end()?>

@@ -38,31 +38,24 @@ class ArticleController extends Controller{
     public $enableCsrfValidation = false;
     public $test;
 
-    public function behaviors(){
+    public function behaviors()
+    {
         return [
-           // 'access'=>[
-              //  'class'=>AccessControl::className(),
-              //  'only'=>['index'],
-             //   'rules'=>[
-               //     'actions' => ['index'],
-             //       'allow' => true,
-           //         'roles' => ['@'],
-         //       ],
-       //     ]
-		   	'access' => [
-            'class' => AccessControl::className(),
-            'only' => ['index', 'create'],
-            'rules' => [
-                // 允许认证用户
-                [
-                    'allow' => true,
-                    'roles' => ['@'],
-                ],
-                // 默认禁止其他用户
+        'access' => [
+        'class' => AccessControl::className(),
+        'only' => ['note','thumbup','thumbdown'],
+        'rules' => [
+            // allow authenticated users
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
+            // everything else is denied
         ],
-        ];
+    ],
+            ];
     }
+
     public function actions()
     {
         return [
@@ -170,7 +163,16 @@ class ArticleController extends Controller{
         return $this->render('cart');
     }
     public function actionIndex(){
-//        if(class_exists('Article',false)){
+//        $he = User::find()->asArray()->all();
+//foreach ($he as $key=>$value){
+//    echo $key.$value["username"];
+//}
+//$hh = User::find()->all();
+//foreach ($hh as $h){
+//    echo $h->email;
+//}
+//exit;
+////        if(class_exists('Article',false)){
 //            echo "33";
 //            exit;
 //        }else{
@@ -341,7 +343,7 @@ class ArticleController extends Controller{
 
 public function actionThumbup(){
         $note_id = $_GET["note_id"];
-        $user_id = $_GET["user_id"];
+        $user_id = Yii::$app->user->identity->id;
         $new_noteupdown = new Noteupdown();
         $note = Note::find()->where(['id'=>$note_id])->one();
         $noteupdown = Noteupdown::find()->where(['note_id'=>$note_id,'user_id'=>$user_id])->orderBy('createdtime DESC')->one();

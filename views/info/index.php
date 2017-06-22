@@ -113,7 +113,7 @@ padding-left:10px;
 <div class="container">
 <div class="col-sm-2">
 <div class="row leff">
- <?php if($user->id == Yii::$app->user->identity->id){?>
+ <?php if($user->id == empty(Yii::$app->user->identity->id)?0:Yii::$app->user->identity->id){?>
     <div class="head-photo" id="head-photo">
         <?= \hyii2\avatar\AvatarWidget::widget(['imageUrl'=>'/uploads/avatar/'.$user->id.'/'.$user->photo]); ?>
     </div>
@@ -163,13 +163,13 @@ padding-left:10px;
     <div class="col-md-7 righh">
     <div class="row">
             <ul class="nav nav-tabs" role="tablist">
-           <?php if($user->id == Yii::$app->user->identity->id){?>
+           <?php if($user->id == empty(Yii::$app->user->identity->id)?0:Yii::$app->user->identity->id){?>
 	    <li role="presentation" class="active"><a href="#done" data-toggle="tab">我的动态</a></li>
 		            <?php }else{?>
                 <li role="presentation" class="active"><a href="#done" data-toggle="tab">他的动态</a></li>
             <?php }?>
             <li role="presentation"><a href="#basic" data-toggle="tab">基本信息</a></li>
-                      <?php if($user->id == Yii::$app->user->identity->id){?>
+                      <?php if($user->id == empty(Yii::$app->user->identity->id)?0:Yii::$app->user->identity->id){?>
             <li role="presentation"><a href="#like" data-toggle="tab">我的收藏</a></li>
             <li role="presentation"><a href="#register" data-toggle="tab">帮助注册</a></li>
 	     <?php }else{?>
@@ -206,7 +206,7 @@ padding-left:10px;
                 'method'=>'post',
             ])?>
             <br>
-	     <?php if($user->id != Yii::$app->user->identity->id){?>
+	     <?php if($user->id != (empty(Yii::$app->user->identity->id)?0:Yii::$app->user->identity->id)){?>
                 <fieldset disabled>
                 <?php }?>
             <?=$form->field($user,'username')->textInput()?>
@@ -218,7 +218,7 @@ padding-left:10px;
             <?=$form->field($user,'repass')->passwordInput()?>
 
                 <?=Html::submitButton('确认修改',['class'=>'btn btn-success'])?>
-                           <?php if($user->id != Yii::$app->user->identity->id){?>
+                           <?php if($user->id != (empty(Yii::$app->user->identity->id)?0:Yii::$app->user->identity->id)){?>
                    </fieldset>
                 <?php }?> 
 	    <?php ActiveForm::end()?>

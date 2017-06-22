@@ -15,7 +15,7 @@ $(".thumb-up").click(function(){
       var mythis = $(this);
         $.ajax({
         url:"'.Url::toRoute(["/article/thumbup"]).'",
-        data:{"user_id":'.Yii::$app->user->identity->id.',"note_id":$(this).parent().parent().attr("class")},
+        data:{"note_id":$(this).parent().parent().attr("class")},
        //         beforeSend:function(){
        // $(".loading").removeClass("hidden");
        // $(".loading").appendTo(mythis);
@@ -42,7 +42,7 @@ $(".thumb-up").click(function(){
         var mythis = $(this);
         $.ajax({
         url:"'.Url::toRoute(["/article/thumbdown"]).'",
-        data:{"user_id":'.Yii::$app->user->identity->id.',"note_id":$(this).parent().parent().attr("class")},
+      
         //       beforeSend:function(){
        // $(".loading").removeClass("hidden");
        // $(".loading").appendTo(mythis);

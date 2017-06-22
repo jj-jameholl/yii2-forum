@@ -31,10 +31,8 @@ $this->title = 'Love Story';
 
             });
             $("#note-go").click(function(){
-            var data = {"kind":"note","id":"'.Yii::$app->user->identity->id.'","content":$("#note-id").val(),"photo":"'.User::findimgbyid(Yii::$app->user->identity->id).'"};
-           // alert("dsad");
+                    // alert("dsad");
          //  $.pjax.reload({container:"#notes"});
-            ws.send(JSON.stringify(data));
             $.ajax({
                 url:"'.Url::toRoute(["/article/note"]).'",
                 data:{"content":$("#note-id").val()},
